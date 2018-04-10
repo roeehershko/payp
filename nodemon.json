@@ -1,6 +1,6 @@
 {
-  "watch": ["src"],
-  "ext": "ts",
+  "watch": ["src", "public"],
+  "ext": "ts hbs",
   "ignore": ["src/**/*.spec.ts"],
   "exec": "node ./index"
 }

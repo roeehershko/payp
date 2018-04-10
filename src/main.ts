@@ -1,18 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { ApplicationModule } from './app.module';
-import * as express from 'express';
-import * as hbs from 'express-hbs';
-import * as path from 'path';
+import * as cors from 'cors';
+
 async function bootstrap() {
 	const app = await NestFactory.create(ApplicationModule);
-	app.use(express.static('public'));
-	app.set('view engine', 'hbs');
-	app.set('views', path.resolve(__dirname + '/../') + '/public/views');
-	app.engine('hbs', hbs.express4({
-        defaultLayout: path.resolve(__dirname + '/../') + '/public/views/layout.hbs',
-        partialsDir: path.resolve(__dirname + '/../') + '/public/views/partials',
-        layoutsDir: path.resolve(__dirname + '/../') + '/public/views/layouts',
-    }));
+	app.use(cors());
 
 	await app.listen(3000);
 }
