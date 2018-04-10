@@ -5,7 +5,7 @@ export const databaseProvider = {
     provide: 'DbConnectionToken',
     useFactory: async () => await createConnection({
         type: 'mysql',
-        host: '192.168.99.100',
+        host: 'mysql',
         port: 3306,
         username: 'root',
         password: '123456',
@@ -14,4 +14,5 @@ export const databaseProvider = {
             Path.resolve(__dirname + '/../entities') + '/**/*{.ts,.js}',
         ],
     }),
+
 };

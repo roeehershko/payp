@@ -14,7 +14,7 @@ export class AuthService {
         @Inject('CustomerRepositoryToken') private readonly customerRepository: Repository<Customer>) {}
 
     async createToken(data: CredentialsDto) {
-        console.log(data);
+
         const user = await this.customerRepository.findOne({ where: { email: data.email || data.username } });
         if ( ! user) return false;
 

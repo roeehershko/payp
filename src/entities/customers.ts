@@ -2,6 +2,8 @@ import {Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinTable, JoinColumn
 import {PaypersInventory} from './paypers_inventory';
 import {PaypersOrder} from './paypers_orders';
 import {PaypersTransaction} from './paypers_transactions';
+import {Transfer} from './transfers';
+import {Wallet} from './wallets';
 
 @Entity('customers')
 export class Customer extends BaseEntity{
@@ -41,4 +43,7 @@ export class Customer extends BaseEntity{
 
     @OneToMany(type => PaypersTransaction, paypers_transactions => paypers_transactions.customer_id)
     paypers_transactions: PaypersTransaction[];
+
+    @OneToMany(type => Wallet, wallets => wallets.customer_id)
+    wallets: Wallet[];
 }

@@ -29,4 +29,7 @@ export class PaypersIpo {
 
     @Column('datetime')
     modified: Date;
+
+    @Column()
+    pax_spent: number;
 }

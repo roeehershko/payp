@@ -1,4 +1,4 @@
-import {Index, Entity, Column, ManyToOne, JoinColumn, PrimaryGeneratedColumn} from 'typeorm';
+import {Index, Entity, Column, ManyToOne, JoinColumn, PrimaryGeneratedColumn, BeforeUpdate} from 'typeorm';
 import {Customer} from './customers';
 import {Payper} from './paypers';
 
@@ -23,4 +23,12 @@ export class PaypersInventory {
 
     @Column('datetime')
     created: Date;
+
+    @Column('datetime')
+    modified: Date;
+
+    @BeforeUpdate()
+    updateDates() {
+        this.modified = new Date();
+    }
 }

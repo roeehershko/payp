@@ -1,15 +1,17 @@
-import {Entity, Column, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {Entity, Column, OneToMany, PrimaryGeneratedColumn, ManyToOne, JoinColumn} from 'typeorm';
 import {CoinTransaction} from './coins_transactions';
 import {PaxOrder} from './pax_orders';
 import {Transfer} from './transfers';
+import {Customer} from './customers';
 
 @Entity('wallets')
 export class Wallet {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    customer_id: number;
+    @ManyToOne(type => Customer, customer_id => customer_id.wallets)
+    @JoinColumn({name: 'customer_id'})
+    customer_id: Customer;
 
     @Column()
     coin_id: number;

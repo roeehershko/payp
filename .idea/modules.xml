@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/payperex.iml" filepath="$PROJECT_DIR$/.idea/payperex.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/payp.iml" filepath="$PROJECT_DIR$/.idea/payp.iml" />
     </modules>
   </component>
 </project>
