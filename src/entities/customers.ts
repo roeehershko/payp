@@ -4,6 +4,7 @@ import {PaypersOrder} from './paypers_orders';
 import {PaypersTransaction} from './paypers_transactions';
 import {Transfer} from './transfers';
 import {Wallet} from './wallets';
+import {PaxOrder} from './pax_orders';
 
 @Entity('customers')
 export class Customer extends BaseEntity{
@@ -40,6 +41,9 @@ export class Customer extends BaseEntity{
 
     @OneToMany(type => PaypersOrder, paypers_orders => paypers_orders.customer, { lazy: true })
     paypers_orders: Promise<PaypersOrder[]>;
+
+    @OneToMany(type => PaxOrder, pax_orders => pax_orders.customer_id, { lazy: true })
+    pax_orders: Promise<PaxOrder[]>;
 
     @OneToMany(type => PaypersTransaction, paypers_transactions => paypers_transactions.customer_id)
     paypers_transactions: PaypersTransaction[];

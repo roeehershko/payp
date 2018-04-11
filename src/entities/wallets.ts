@@ -22,9 +22,6 @@ export class Wallet {
     @OneToMany(type => CoinTransaction, coins_transactions => coins_transactions.wallet_id)
     coins_transactions: CoinTransaction[];
 
-    @OneToMany(type => PaxOrder, pax_orders => pax_orders.wallet_id)
-    pax_orders: PaxOrder[];
-
     @OneToMany(type => Transfer, transfers => transfers.wallet_id)
     transfers: Transfer[];
 

@@ -23,10 +23,16 @@ import {PaypersInventoryService} from './services/paypers-inventory.service';
 import {PaypersInventoryController} from './controller/paypers-inventory.controller';
 import {paypersTransactionProvider} from './providers/paypers-transactions.providers';
 import {PaypersTransactionService} from './services/paypers-transaction.service';
+import {paxOrderProvider} from './providers/pax-orders.providers';
+import {orderStatusProvider} from './providers/orders-statuses.providers';
+import {orderTypeProvider} from './providers/orders-types.providers';
+import {PaxOrdersService} from './services/pax-orders.service';
+import {PaxOrderController} from './controller/pax-order.controller';
+import {OrderMatchService} from './services/pax-orders/order-match.service';
 
 @Module({
     imports: [],
-    controllers: [AuthController, TransferController, CoinbaseController, PaypersIpoController, PaypersInventoryController],
+    controllers: [AuthController, TransferController, CoinbaseController, PaypersIpoController, PaypersInventoryController, PaxOrderController],
     components: [
         databaseProvider,
         customerProvider,
@@ -38,12 +44,17 @@ import {PaypersTransactionService} from './services/paypers-transaction.service'
         paypersInventoryProvider,
         paypersProvider,
         paypersTransactionProvider,
+        paxOrderProvider,
         JwtStrategy,
         AuthService,
+        orderStatusProvider,
+        orderTypeProvider,
         CryptoService,
         TransferService,
         CoinbaseService,
+        PaxOrdersService,
         PaypersIpoService,
+        OrderMatchService,
         PaypersTransactionService,
         PaypersInventoryService,
     ],
