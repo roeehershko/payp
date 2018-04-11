@@ -60,6 +60,6 @@ export class OrderProcessService {
         // Create transactions
         // Update wallets to there new balances
         // Notify the user somehow
-        // ...This needs to be in a seperate service
+        // ...This needs to be in a separate service
     }
 }
