@@ -4,6 +4,7 @@ import {Wallet} from '../../entities/wallets';
 import {Repository} from 'typeorm';
 import {ORDER_TYPE_BUY} from '../../common/constants/order-types.types';
 import {DividedOrders, OrderMatch} from './pax-orders.type';
+import {OrderProcessService} from './order-process.service';
 
 @Component()
 export class OrderMatchService {
@@ -11,6 +12,7 @@ export class OrderMatchService {
     constructor(
         @Inject('PaxOrderRepositoryToken') private readonly paxOrderRepository: Repository<PaxOrder>,
         @Inject('WalletRepositoryToken') private readonly walletRepository: Repository<Wallet>,
+        private readonly orderProcessService: OrderProcessService,
     ) {}
 
     async matchForPair(pair_id) {
@@ -19,7 +21,7 @@ export class OrderMatchService {
         // Get all orders for the current pair
         const orders = await this.paxOrderRepository.find({
             where: { order_status_id: 1, pax_order_pair_id: pair_id },
-            relations: ['order_type_id'],
+            relations: ['order_type_id', 'pax_order_pair_id', 'pax_order_pair_id.primary_coin_id', 'pax_order_pair_id.secondary_coin_id', 'customer_id'],
         });
 
         // Find matches
@@ -30,10 +32,10 @@ export class OrderMatchService {
 
         if (bestMatch) {
             // Process Best Match
-            console.log(bestMatch);
+            this.orderProcessService.process(bestMatch.buyOrder, bestMatch.sellOrder);
 
             // Repeat process as long as match found
-            this.matchForPair(pair_id);
+            // this.matchForPair(pair_id);
         }
     }
 

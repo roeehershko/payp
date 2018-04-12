@@ -7,9 +7,13 @@ export class PaxOrderTransaction {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(type => PaxOrder, order_id => order_id.pax_order_transactions)
-    @JoinColumn({name: 'order_id'})
-    order_id: number;
+    @ManyToOne(type => PaxOrder, buy_order_id => buy_order_id.pax_order_transactions)
+    @JoinColumn({name: 'buy_order_id'})
+    buy_order_id: number;
+
+    @ManyToOne(type => PaxOrder, sell_order_id => sell_order_id.pax_order_transactions)
+    @JoinColumn({name: 'sell_order_id'})
+    sell_order_id: number;
 
     @Column()
     amount: number;

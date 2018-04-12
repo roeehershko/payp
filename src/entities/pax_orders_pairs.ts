@@ -16,6 +16,6 @@ export class PaxOrderPair {
     primary_coin_id: Coin;
 
     @ManyToOne(type => Coin, primary_coin_id => primary_coin_id.id)
-    @JoinColumn({name: 'primary_coin_id'})
+    @JoinColumn({name: 'secondary_coin_id'})
     secondary_coin_id: Coin;
 }

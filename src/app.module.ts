@@ -29,6 +29,11 @@ import {orderTypeProvider} from './providers/orders-types.providers';
 import {PaxOrdersService} from './services/pax-orders.service';
 import {PaxOrderController} from './controller/pax-order.controller';
 import {OrderMatchService} from './services/pax-orders/order-match.service';
+import {OrderProcessService} from './services/pax-orders/order-process.service';
+import {WalletService} from './services/wallet.service';
+import {paxOrderPairProvider} from './providers/pax-orders-pairs.providers';
+import {coinTransactionProvider} from './providers/coins-transactions.providers';
+import {ExchangeService} from './services/exchange.service';
 
 @Module({
     imports: [],
@@ -44,6 +49,8 @@ import {OrderMatchService} from './services/pax-orders/order-match.service';
         paypersInventoryProvider,
         paypersProvider,
         paypersTransactionProvider,
+        paxOrderPairProvider,
+        coinTransactionProvider,
         paxOrderProvider,
         JwtStrategy,
         AuthService,
@@ -53,8 +60,11 @@ import {OrderMatchService} from './services/pax-orders/order-match.service';
         TransferService,
         CoinbaseService,
         PaxOrdersService,
+        ExchangeService,
         PaypersIpoService,
         OrderMatchService,
+        WalletService,
+        OrderProcessService,
         PaypersTransactionService,
         PaypersInventoryService,
     ],

@@ -3,6 +3,7 @@ import {CoinTransaction} from './coins_transactions';
 import {PaxOrder} from './pax_orders';
 import {Transfer} from './transfers';
 import {Customer} from './customers';
+import {Coin} from './coins';
 
 @Entity('wallets')
 export class Wallet {
@@ -13,8 +14,9 @@ export class Wallet {
     @JoinColumn({name: 'customer_id'})
     customer_id: Customer;
 
-    @Column()
-    coin_id: number;
+    @ManyToOne(type => Coin, coin_id => coin_id.wallets)
+    @JoinColumn({name: 'coin_id'})
+    coin_id: Coin;
 
     @Column()
     balance: number;

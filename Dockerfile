@@ -8,6 +8,7 @@ RUN echo 87.98.253.214 packagist.org >> /etc/hosts
 
 # Install nodemon
 RUN yarn global add nodemon
+RUN yarn global add tsc
 # Install packages using Yarn
 ADD ./package.json /tmp/package.json
 RUN cd /tmp && yarn
