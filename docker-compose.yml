@@ -29,6 +29,14 @@ services:
       - mysqldbdata:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: 123456
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    networks:
+      - backend
+    volumes:
+      - mongodbdata:/data/db
 volumes:
     mongodbdata:
     mysqldbdata:

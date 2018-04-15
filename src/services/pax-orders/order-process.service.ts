@@ -45,7 +45,6 @@ export class OrderProcessService {
         if (primaryBuyWallet && primarySellWallet && secondaryBuyWallet && secondarySellWallet) {
             // Move Primary from seller to buyer (amount)
             const uid = await this.exchangeService.exchange(primarySellWallet, primaryBuyWallet, amount);
-
             // Move secondary Coin from buyer to seller (price)
             this.exchangeService.exchange(secondaryBuyWallet, secondarySellWallet, price, uid);
 

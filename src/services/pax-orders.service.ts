@@ -5,15 +5,15 @@ import {CreatePaxOrderDto} from '../dto/pax-order/create-pax-order.type.dto';
 import {OrderStatus} from '../entities/orders_statuses';
 import {ORDER_PENDING} from '../common/constants/order-statuses.types';
 import {OrderType} from '../entities/orders_types';
-import {Wallet} from '../entities/wallets';
 import {PaxOrderPair} from '../entities/pax_orders_pairs';
+import {Customer} from '../entities/customers';
 
 @Component()
 export class PaxOrdersService {
 
     constructor(
         @Inject('PaxOrderRepositoryToken') private readonly paxOrderRepository: Repository<PaxOrder>,
-        @Inject('WalletRepositoryToken') private readonly walletRepository: Repository<Wallet>,
+        @Inject('CustomerRepositoryToken') private readonly customerRepository: Repository<Customer>,
         @Inject('OrderTypeRepositoryToken') private readonly orderTypeRepository: Repository<OrderType>,
         @Inject('OrderStatusRepositoryToken') private readonly orderStatusRepository: Repository<OrderStatus>,
         @Inject('PaxOrderPairRepositoryToken') private readonly paxORderPairPRepository: Repository<PaxOrderPair>,
@@ -26,6 +26,7 @@ export class PaxOrdersService {
         paxOrder.pax_order_pair_id = await this.paxORderPairPRepository.findOneById(data.pax_order_pair_id);
         paxOrder.request_amount = data.request_amount;
         paxOrder.remaining_amount = data.request_amount;
+        paxOrder.customer_id = await this.customerRepository.findOneById(data.customer_id);
         paxOrder.price = data.price;
 
         return await this.paxOrderRepository.save(paxOrder);

@@ -1,0 +1,103 @@
+[
+  {
+    "uid": "1",
+    "item": "russian lander",
+    "validate": {
+      "modules": [
+        {
+          "method": 1,
+          "data": {
+            "eq": "Russian"
+          }
+        }
+      ]
+    },
+    "modules": [
+      {
+        "method": 1,
+        "if": {
+          "eq": "Russian"
+        },
+        "then": {
+          "priority": 1
+        }
+      }
+    ]
+  },
+  {
+    "uid": "2",
+    "item": "lander A",
+    "validate": {
+      "modules": [
+        {
+          "method": 1,
+          "data": {
+            "in": ["Russian", "United States", "Italy"]
+          }
+        }
+      ]
+    },
+    "modules": [
+      {
+        "method": 1,
+        "if": {
+          "in": ["Russian", "United States", "Italy"]
+        },
+        "then": {
+          "weight": 10,
+          "priority": 2
+        }
+      }
+    ]
+  },
+  {
+    "uid": "3",
+    "item": "lander B",
+    "validate": {
+      "modules": [
+        {
+          "method": 1,
+          "data": {
+            "in": ["Russian", "United States", "Italy"]
+          }
+        }
+      ]
+    },
+    "modules": [
+      {
+        "method": 1,
+        "if": {
+          "in": ["Russian", "United States", "Italy"]
+        },
+        "then": {
+          "weight": 10,
+          "priority": 2
+        }
+      }
+    ]
+  },
+  {
+    "uid": "3",
+    "item": "lander A",
+    "validate": {
+      "modules": [
+        {
+          "method": 2
+        }
+      ]
+    },
+    "modules": [
+      {
+        "method": 2,
+        "if": {},
+        "then": {
+          "weight": null,
+          "priority": null
+        }
+      }
+    ]
+  }
+]
+
+
+// Outputs - ['russian lander': 100]

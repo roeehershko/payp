@@ -21,7 +21,13 @@ export class OrderMatchService {
         // Get all orders for the current pair
         const orders = await this.paxOrderRepository.find({
             where: { order_status_id: 1, pax_order_pair_id: pair_id },
-            relations: ['order_type_id', 'pax_order_pair_id', 'pax_order_pair_id.primary_coin_id', 'pax_order_pair_id.secondary_coin_id', 'customer_id'],
+            relations: [
+                'order_type_id',
+                'pax_order_pair_id',
+                'pax_order_pair_id.primary_coin_id',
+                'pax_order_pair_id.secondary_coin_id',
+                'customer_id',
+            ],
         });
 
         // Find matches
