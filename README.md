@@ -81,3 +81,18 @@ campaigns can ask the following questions on creating before CPA/PAYMENT/CVC/CTC
 # ---- Word about prediction ------
 This is not specific module of our system, its global term of everything we do
 with machine learning which can take a part in multiple areas in our system
+
+# Streaming Dbs
+MemSQL
+Redis
+Pedis
+Scylla
+
+# Writes Dbs
+Cassandra
+Mongo
+Scylla
+
+# Aggregation & Search
+ES
+MongoDB

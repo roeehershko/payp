@@ -21,6 +21,9 @@ export class Wallet {
     @Column()
     balance: number;
 
+    @Column()
+    locked_balance: number;
+
     @OneToMany(type => CoinTransaction, coins_transactions => coins_transactions.wallet_id)
     coins_transactions: CoinTransaction[];
 

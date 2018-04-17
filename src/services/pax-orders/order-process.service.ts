@@ -1,4 +1,4 @@
-import {Component, Inject} from '@nestjs/common';
+import {BadRequestException, Component, Inject} from '@nestjs/common';
 import {PaxOrder} from '../../entities/pax_orders';
 import {Wallet} from '../../entities/wallets';
 import {Repository} from 'typeorm';
@@ -38,13 +38,25 @@ export class OrderProcessService {
         const primaryBuyWallet = await this.walletService.getOrCreateWallet(buyOrder.customer_id, primaryCoin);
         const primarySellWallet = await this.walletService.getWallet(sellOrder.customer_id, primaryCoin);
 
+
         // get secondary wallets
         const secondaryBuyWallet = await this.walletService.getWallet(buyOrder.customer_id, secondaryCoin);
         const secondarySellWallet = await this.walletService.getOrCreateWallet(sellOrder.customer_id, secondaryCoin);
 
         if (primaryBuyWallet && primarySellWallet && secondaryBuyWallet && secondarySellWallet) {
+            // Release locked balance
+            primarySellWallet.locked_balance -= amount;
+            primarySellWallet.balance += amount;
+
+            if (primarySellWallet.locked_balance < 0) {
+                throw new BadRequestException('Someting is not quiet right.')
+            }
+
             // Move Primary from seller to buyer (amount)
             const uid = await this.exchangeService.exchange(primarySellWallet, primaryBuyWallet, amount);
+            // Release locked balance
+            secondaryBuyWallet.locked_balance -= price;
+            secondaryBuyWallet.balance += price;
             // Move secondary Coin from buyer to seller (price)
             this.exchangeService.exchange(secondaryBuyWallet, secondarySellWallet, price, uid);
 
@@ -52,8 +64,8 @@ export class OrderProcessService {
             buyOrder.remaining_amount -= amount;
             sellOrder.remaining_amount -= amount;
             // Update order status
-            await this.updateOrderStatus(buyOrder);
-            await this.updateOrderStatus(sellOrder);
+            buyOrder.order_status_id = await this.getOrderStatus(buyOrder);
+            buyOrder.order_status_id = await this.getOrderStatus(sellOrder);
 
             await this.paxOrderRepository.save([buyOrder, sellOrder]);
             // Release locked balance
@@ -65,11 +77,11 @@ export class OrderProcessService {
         }
     }
 
-    private async updateOrderStatus(order: PaxOrder): void {
+    private async getOrderStatus(order: PaxOrder) {
         if (order.remaining_amount <= 0) {
-            order.order_status_id = await this.orderStatusRepository.findOneById(ORDER_COMPLETED);
+            return this.orderStatusRepository.findOneById(ORDER_COMPLETED);
         } else {
-            order.order_status_id = await this.orderStatusRepository.findOneById(ORDER_PARTIAL);
+            return this.orderStatusRepository.findOneById(ORDER_PARTIAL);
         }
     }
 

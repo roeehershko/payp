@@ -34,12 +34,15 @@ import {WalletService} from './services/wallet.service';
 import {paxOrderPairProvider} from './providers/pax-orders-pairs.providers';
 import {coinTransactionProvider} from './providers/coins-transactions.providers';
 import {ExchangeService} from './services/exchange.service';
-
+import {MetadataStorage, Validator} from 'class-validator';
+import {ValidationPipe} from './common/validation/validation.pipe';
 @Module({
     imports: [],
     controllers: [AuthController, TransferController, CoinbaseController, PaypersIpoController, PaypersInventoryController, PaxOrderController],
     components: [
+        Validator,
         databaseProvider,
+        ValidationPipe,
         customerProvider,
         transferProvider,
         walletProvider,

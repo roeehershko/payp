@@ -1,44 +1,28 @@
-import { HttpException } from '@nestjs/common';
-import {
-    PipeTransform,
-    Pipe,
-    ArgumentMetadata,
-    HttpStatus,
-} from '@nestjs/common';
-import { validate } from 'class-validator';
-import { plainToClass } from 'class-transformer';
+import {PipeTransform, Pipe, ArgumentMetadata, BadRequestException} from '@nestjs/common';
+import {Validator} from 'class-validator';
+import {plainToClass} from 'class-transformer';
 
 @Pipe()
 export class ValidationPipe implements PipeTransform<any> {
+
+    constructor(private validator: Validator) {}
+
     async transform(value, metadata: ArgumentMetadata) {
-        const { metatype } = metadata;
+        const {metatype} = metadata;
         if (!metatype || !this.toValidate(metatype)) {
             return value;
         }
-
         const object = plainToClass(metatype, value);
-        const errors = await validate(object);
+        const errors = await this.validator.validate(object);
 
         if (errors.length > 0) {
-            throw new HttpException({ status: 0, data: this.formatErrors(errors) }, HttpStatus.BAD_REQUEST);
+            throw new BadRequestException(errors);
         }
         return value;
     }
 
     private toValidate(metatype): boolean {
         const types = [String, Boolean, Number, Array, Object];
-        return !types.find(type => metatype === type);
-    }
-
-    private formatErrors(errors) {
-        let dtoErrors = [];
-        errors.forEach(function (error) {
-            dtoErrors.push({
-                field: error.property,
-                constraints: error.constraints
-            });
-        });
-
-        return dtoErrors;
+        return !types.find((type) => metatype === type);
     }
 }

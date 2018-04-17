@@ -15,7 +15,7 @@ export class ExchangeService {
         @Inject('CoinTransactionRepositoryToken') private readonly coinTransactionRepository: Repository<CoinTransaction>,
     ) {}
 
-    public async exchange(fromWallet: Wallet, toWallet: Wallet, amount: number, uid: string = null): string {
+    public async exchange(fromWallet: Wallet, toWallet: Wallet, amount: number, uid: string = null): Promise<string> {
         // TODO.secure the wallet money, there is 2 balance rows - balance, available_balance
         // This needs to be in a separate service ...
         // Generate uid if none given
