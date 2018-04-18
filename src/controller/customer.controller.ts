@@ -3,18 +3,16 @@ import {Repository} from 'typeorm';
 import {Customer} from '../entities/customers';
 import {AuthService} from '../services/auth.service';
 
-@Controller('/auth')
-export class AuthController {
+@Controller('/customers')
+export class CustomerController {
 
     constructor(
         private readonly authService: AuthService,
         @Inject('CustomerRepositoryToken') private readonly customerRepository: Repository<Customer>) {}
 
-    @Post('token')
+    @Post()
     @HttpCode(HttpStatus.OK)
-    public async getToken(@Body() body) {
+    public async postCustomer(@Body() body) {
         return await this.authService.createToken(body);
     }
-
-
 }

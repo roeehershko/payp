@@ -14,6 +14,8 @@ export class OrderEligable implements ValidatorConstraintInterface {
                 relations: [ 'primary_coin_id', 'secondary_coin_id' ],
             });
 
+        if ( ! pair) return true;
+
         let wallet: Wallet = null;
         let minBalance: number = null;
         if (data.order_type_id === ORDER_TYPE_BUY) {

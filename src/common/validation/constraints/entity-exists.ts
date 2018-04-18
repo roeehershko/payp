@@ -1,15 +1,22 @@
 import {ValidatorConstraint, ValidatorConstraintInterface, ValidationArguments} from 'class-validator';
-import {getConnection} from 'typeorm';
+import {Connection, getConnection, Repository} from 'typeorm';
+import {Component, Inject} from '@nestjs/common';
 
 @ValidatorConstraint({ name: 'entityExists', async: false })
+@Component()
 export class EntityExists implements ValidatorConstraintInterface {
 
+    constructor(
+        @Inject('DbConnectionToken') private readonly connection: Connection,
+    ) {}
+
     async validate(text: string, validationArguments: ValidationArguments) {
-        const customer = await getConnection().getRepository(validationArguments.constraints[0]).findOneById(text);
-        return !! customer;
+        const entity = await this.connection.getRepository(validationArguments.constraints[0]).findOneById(text);
+        return !! entity;
     }
 
     defaultMessage(args: ValidationArguments) {
-        return 'Email already exists';
+        console.log(args);
+        return 'Entity not exists';
     }
 }

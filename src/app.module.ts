@@ -36,13 +36,22 @@ import {coinTransactionProvider} from './providers/coins-transactions.providers'
 import {ExchangeService} from './services/exchange.service';
 import {MetadataStorage, Validator} from 'class-validator';
 import {ValidationPipe} from './common/validation/validation.pipe';
+import {EntityExists} from './common/validation/constraints/entity-exists';
 @Module({
     imports: [],
-    controllers: [AuthController, TransferController, CoinbaseController, PaypersIpoController, PaypersInventoryController, PaxOrderController],
+    controllers: [
+        AuthController,
+        TransferController,
+        CoinbaseController,
+        PaypersIpoController,
+        PaypersInventoryController,
+        PaxOrderController,
+    ],
     components: [
         Validator,
         databaseProvider,
         ValidationPipe,
+        EntityExists,
         customerProvider,
         transferProvider,
         walletProvider,
