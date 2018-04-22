@@ -1,4 +1,4 @@
-import {Component, Inject} from '@nestjs/common';
+import {Component, HttpException, Inject} from '@nestjs/common';
 import {Customer} from '../entities/customers';
 import {Repository} from 'typeorm';
 import {CredentialsDto} from '../dto/credentials.dto';
@@ -16,7 +16,9 @@ export class AuthService {
     async createToken(data: CredentialsDto) {
 
         const user = await this.customerRepository.findOne({ where: { email: data.email || data.username } });
-        if ( ! user) return false;
+        if ( ! user) {
+            throw new HttpException('Email not exists or invalid', 200);
+         }
 
         const isValid = await this.crypto.comparePassword(data.password, user.password);
 
@@ -29,7 +31,7 @@ export class AuthService {
             };
         }
         else {
-            return false;
+            throw new HttpException('Invalid email or password', 200);
         }
     }
 
